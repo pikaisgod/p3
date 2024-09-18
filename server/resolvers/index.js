@@ -9,30 +9,44 @@ const resolvers = {
     users: async () => {
       return await User.find().populate('favoriteMovies').populate('watchList');
     },
-    
+
     // Fetch a specific user by ID
     user: async (_, { id }) => {
       return await User.findById(id).populate('favoriteMovies').populate('watchList');
     },
-    
+
     // Fetch all movies stored in the MongoDB database
     movies: async () => {
       return await Movie.find();
     },
-    
+
     // Fetch a single movie by ID
     movie: async (_, { id }) => {
       return await Movie.findById(id);
     },
-    
+
     // Fetch trending movies from the Simkl API
     trendingMovies: async () => {
-      return await getTrendingMovies();
+      try {
+        const trendingMovies = await getTrendingMovies();
+        console.log('Trending movies from Simkl:', trendingMovies); // Add logging
+        return trendingMovies;
+      } catch (error) {
+        console.error('Error fetching trending movies:', error.message);
+        throw new Error('Failed to fetch trending movies');
+      }
     },
-    
+
     // Search for movies using the Simkl API
     searchMovie: async (_, { query }) => {
-      return await searchMovie(query);
+      try {
+        const movies = await searchMovie(query);
+        console.log(`Movies found for query "${query}":`, movies); // Add logging
+        return movies;
+      } catch (error) {
+        console.error(`Error searching for movies with query "${query}":`, error.message);
+        throw new Error('Failed to search for movies');
+      }
     },
   },
 
@@ -43,7 +57,7 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    
+
     // User login mutation
     login: async (_, { email, password }) => {
       const user = await User.findOne({ email });
@@ -53,7 +67,7 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    
+
     // Add a movie to the user's favorite list
     addFavoriteMovie: async (_, { userId, movieId }) => {
       return await User.findByIdAndUpdate(
@@ -62,7 +76,7 @@ const resolvers = {
         { new: true }
       ).populate('favoriteMovies');
     },
-    
+
     // Add a movie to the user's watch list
     addToWatchList: async (_, { userId, movieId }) => {
       return await User.findByIdAndUpdate(
@@ -71,7 +85,7 @@ const resolvers = {
         { new: true }
       ).populate('watchList');
     },
-    
+
     // Add a comment to a movie
     addComment: async (_, { movieId, text }, { user }) => {
       if (!user) {
