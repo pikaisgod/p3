@@ -1,37 +1,11 @@
 # Ignore environment variables
 .env
 
-# Ignore Node.js modules
+# Ignore node modules
 node_modules/
-
-# Ignore logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Ignore operating system files
-.DS_Store
-Thumbs.db
-
-# Ignore coverage directory (for testing)
-coverage/
 
 # Ignore server-side build folders
 build/
 
-# Ensure client build folder is included
+# Do not ignore the React build folder
 !/client/build
-
-# Ignore temp and misc files
-*.tmp
-*.log
-*.pid
-*.gz
-*.seed
-*.pid.lock
-
-# Ignore editor/project-specific files
-.vscode/
-.idea/
-*.sublime-workspace
-*.sublime-project
