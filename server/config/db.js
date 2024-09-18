@@ -7,7 +7,7 @@ const connectDB = async () => {
     mongoose.set('strictQuery', false);
 
     // Connect to MongoDB
-    await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect(process.env.MONGO_URI || "mongodb+srv:dilan:kirit1221@project3.l3zfq.mongodb.net/mydatabase?retryWrites=true&w=majority&appName=project3", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
