@@ -1,5 +1,5 @@
-const User = require('../models/User');
-const Movie = require('../models/Movie');
+const User = require('../models/user');
+const Movie = require('../models/movie');
 const { signToken } = require('../utils/auth');
 const { getTrendingMovies, searchMovie } = require('../utils/simkl'); // Import Simkl functions
 
