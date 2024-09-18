@@ -1,11 +1,13 @@
 # Ignore environment variables
 .env
 
-# Ignore node modules
+# Ignore Node.js modules
 node_modules/
 
-# Ignore server-side build folders
-build/
+# Ignore log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Do not ignore the React build folder
-!/client/build
+# Miscellaneous
+.DS_Store
