@@ -1,15 +1,29 @@
 // server.js
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
-const typeDefs = require('./schema/typeDefs'); 
-const resolvers = require('./resolvers'); 
-require('dotenv').config(); 
+const mongoose = require('mongoose'); // Add Mongoose for MongoDB
+require('dotenv').config(); // Load environment variables from .env
 const cors = require('cors');
+const typeDefs = require('./schema/typeDefs'); // Import GraphQL schema
+const resolvers = require('./resolvers'); // Import GraphQL resolvers
 
-const app = express(); 
+const app = express(); // Initialize Express
 
-app.use(cors()); 
+app.use(cors()); // Enable CORS middleware
 
+// MongoDB Connection using Mongoose
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => {
+  console.log('MongoDB connected successfully');
+})
+.catch(err => {
+  console.error('MongoDB connection error:', err);
+});
+
+// Initialize Apollo Server
 const server = new ApolloServer({ typeDefs, resolvers });
 
 server.start().then(() => {
