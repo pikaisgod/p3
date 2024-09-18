@@ -20,6 +20,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({ req }) => ({ req }),
+  persistedQueries: false, // Disable persisted queries to avoid memory issues
 });
 
 server.start().then(() => {
@@ -28,13 +29,13 @@ server.start().then(() => {
   // Serve static files from the React app (client/build)
   app.use(express.static(path.join(__dirname, '../client/build')));
 
-  // Catch-all route to send back React's index.html file for any unknown routes
+  // For any other routes, return the React app's index.html file
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
   });
 
   // Start the Express server
-  app.listen({ port: process.env.PORT || 4000 }, () =>
-    console.log(`🚀 Server ready at http://localhost:${process.env.PORT || 4000}${server.graphqlPath}`)
-  );
+  app.listen({ port: process.env.PORT || 4000 }, () => {
+    console.log(`🚀 Server ready at http://localhost:${process.env.PORT || 4000}${server.graphqlPath}`);
+  });
 });
