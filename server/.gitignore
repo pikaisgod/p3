@@ -1,0 +1,46 @@
+# Ignore environment variables
+.env
+
+# Ignore Node.js modules
+node_modules/
+
+# Ignore logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore build output (if any)
+build/
+dist/
+
+# Ignore operating system files
+.DS_Store
+Thumbs.db
+
+# Ignore coverage directory (for testing)
+coverage/
+
+# Ignore any temp files
+*.tmp
+*.log
+*.pid
+*.gz
+*.seed
+*.pid.lock
+
+# Ignore editor/project-specific files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Ignore misc
+*.swp
+*.lock
+
+# Ignore specific package manager lock files (optional)
+package-lock.json
+yarn.lock
+
+# Ignore any compiled code (optional)
+*.out
