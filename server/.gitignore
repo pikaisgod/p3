@@ -9,10 +9,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Ignore build output (if any)
-build/
-dist/
-
 # Ignore operating system files
 .DS_Store
 Thumbs.db
@@ -42,5 +38,8 @@ coverage/
 package-lock.json
 yarn.lock
 
-# Ignore any compiled code (optional)
-*.out
+# Ignore build output only for the server
+/build     # This ignores server-side build folders
+
+# Do NOT ignore client/build folder
+!/client/build    # Ensures client/build is included for deployment
