@@ -17,9 +17,11 @@ const typeDefs = gql`
   releaseYear: Int
   rating: Float
 }
-type Query {
-  searchMovie(query: String!): [Movie]
-}
+ type Query {
+    searchMovie(query: String!): [Movie]
+    trendingMovies: [Movie]
+    searchMoviesByGenre(genre: String!): [Movie] # Add this for genre search
+  }
 
   type Comment {
     id: ID!

@@ -1,30 +1,27 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { QUERY_SEARCH_MOVIE } from '../utils/queries'; // Import the correct query
+import { QUERY_SEARCH_MOVIE } from '../utils/queries'; // Ensure the query is correct
 
 const Search = () => {
-  const [searchQuery, setSearchQuery] = useState(''); // State to store the user's input
+  const [searchQuery, setSearchQuery] = useState('');
   const { data, error, loading } = useQuery(QUERY_SEARCH_MOVIE, {
     variables: { query: searchQuery },
-    skip: !searchQuery, // Skip the query if no input
-    fetchPolicy: 'no-cache', // Always fetch fresh data
+    skip: !searchQuery, // Skip the query if there's no search input
+    fetchPolicy: 'no-cache', // Ensure fresh data is fetched
   });
 
-  // Handle input change for search bar
   const handleInputChange = (e) => {
-    setSearchQuery(e.target.value); // Update searchQuery with user's input
+    setSearchQuery(e.target.value);
   };
 
-  // If the data is still loading
+  // Log and handle error
   if (loading) return <p>Loading...</p>;
-
-  // If there's an error fetching the data
   if (error) {
-    console.error('Error:', error);
+    console.error('Error occurred:', error);
     return <p>Error occurred while searching for movies. Please try again later.</p>;
   }
 
-  // Extract the movies from the search query response
+  // Extract movies from response data
   const movies = data?.searchMovie || [];
 
   return (
@@ -33,7 +30,7 @@ const Search = () => {
         type="text"
         placeholder="Search for movies..."
         value={searchQuery}
-        onChange={handleInputChange} // Update search query on input change
+        onChange={handleInputChange}
       />
       {movies.length > 0 ? (
         <div>
