@@ -1,26 +1,20 @@
-// server.js
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
+const typeDefs = require('./schema/typeDefs'); // Schema definitions
+const resolvers = require('./resolvers'); // Resolvers
 require('dotenv').config();
 const cors = require('cors');
-const typeDefs = require('./schema/typeDefs');
-const resolvers = require('./resolvers');
-const connectDB = require('./config/db');
 
 const app = express();
 
-// Middleware for CORS
-app.use(cors());
-
-// Connect to MongoDB
-connectDB();
+// Middleware
+app.use(cors()); // Enable CORS
 
 // Apollo Server setup
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req }) => ({ req }),
-  persistedQueries: false,  // Disable persisted queries to prevent unbounded cache issues
+  context: ({ req }) => ({ req }), // Add context if needed
 });
 
 server.start().then(() => {
