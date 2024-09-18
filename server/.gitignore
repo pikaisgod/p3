@@ -16,7 +16,13 @@ Thumbs.db
 # Ignore coverage directory (for testing)
 coverage/
 
-# Ignore any temp files
+# Ignore server-side build folders
+build/
+
+# Ensure client build folder is included
+!/client/build
+
+# Ignore temp and misc files
 *.tmp
 *.log
 *.pid
@@ -29,17 +35,3 @@ coverage/
 .idea/
 *.sublime-workspace
 *.sublime-project
-
-# Ignore misc
-*.swp
-*.lock
-
-# Ignore specific package manager lock files (optional)
-package-lock.json
-yarn.lock
-
-# Ignore build output only for the server
-/build     # This ignores server-side build folders
-
-# Do NOT ignore client/build folder
-!/client/build    # Ensures client/build is included for deployment

@@ -8,7 +8,11 @@ const resolvers = require('./resolvers');
 const connectDB = require('./config/db');
 
 const app = express();
+
+// Middleware for CORS
 app.use(cors());
+
+// Connect to MongoDB
 connectDB();
 
 // Apollo Server setup
@@ -16,7 +20,6 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({ req }) => ({ req }),
-  persistedQueries: false,
 });
 
 server.start().then(() => {
@@ -25,7 +28,7 @@ server.start().then(() => {
   // Serve static files from the React app (client/build)
   app.use(express.static(path.join(__dirname, '../client/build')));
 
-  // Catch-all route to send back React's index.html
+  // Catch-all route to send back React's index.html file for any unknown routes
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
   });
