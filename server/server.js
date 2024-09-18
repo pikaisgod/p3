@@ -1,31 +1,22 @@
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
-const mongoose = require('mongoose');
-const path = require('path'); // To serve the React app
+const path = require('path');
 require('dotenv').config();
 const cors = require('cors');
 const typeDefs = require('./schema/typeDefs');
 const resolvers = require('./resolvers');
+const connectDB = require('./config/db');
 
 const app = express();
-
-// Middleware for CORS
 app.use(cors());
-
-// MongoDB connection (no deprecated options)
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log('MongoDB connected successfully');
-  })
-  .catch(err => {
-    console.error('MongoDB connection error:', err);
-  });
+connectDB();
 
 // Apollo Server setup
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  persistedQueries: false, // Disable persisted queries
+  context: ({ req }) => ({ req }),
+  persistedQueries: false,
 });
 
 server.start().then(() => {
@@ -34,7 +25,7 @@ server.start().then(() => {
   // Serve static files from the React app (client/build)
   app.use(express.static(path.join(__dirname, '../client/build')));
 
-  // Catch-all route to send back React's index.html file for any unknown routes
+  // Catch-all route to send back React's index.html
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
   });
